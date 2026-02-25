@@ -1,0 +1,268 @@
+title,description
+"Senior Full Stack Developer","We are looking for an experienced Senior Full Stack Developer to lead our software engineering team. You will be responsible for designing and implementing scalable web applications using modern technologies.
+
+Key Responsibilities:
+- Develop robust and scalable web applications using Python (Django/Flask) and JavaScript (React/Node.js).
+- Architect and maintain cloud infrastructure on AWS, ensuring high availability and security.
+- Integrate data storage solutions including SQL and NoSQL databases.
+- Collaborate with data scientists to integrate machine learning models into production applications.
+
+Requirements:
+- Bachelor's degree in Computer Science or related field.
+- 5+ years of experience in full-stack development.
+- Proficiency in Python, JavaScript, 
+SQL, and Cloud services (AWS/Azure).
+- Strong knowledge of Git, APIs, and System Design."
+"DevOps Engineer","We are seeking a skilled DevOps Engineer to streamline our deployment processes and manage our cloud infrastructure. You will work closely with the development team to automate workflows and ensure system reliability.
+
+Key Responsibilities:
+- Design and implement CI/CD pipelines using Jenkins, GitLab CI, or GitHub Actions.
+- Manage containerized applications using Docker and Kubernetes on AWS.
+- Automate data pipeline deployments and monitor system performance.
+- Implement Infrastructure as Code (IaC) using Terraform or CloudFormation.
+
+Requirements:
+- 3+ years of experience in a DevOps or SRE role.
+- Strong knowledge of Linux administration, Python scripting, and SQL.
+- Experience with cloud platforms (AWS) and container orchestration.
+- Familiarity with data engineering concepts."
+"Data Scientist","We are looking for a Data Scientist to analyze large datasets and derive actionable insights. You will build predictive models and machine learning algorithms to solve complex business problems.
+
+Key Responsibilities:
+- Preprocess and analyze structured and unstructured data using Python (Pandas, NumPy) and SQL.
+- Develop and deploy machine learning models using Scikit-Learn, TensorFlow, or PyTorch.
+- Collaborate with software engineers to deploy models via APIs.
+- Utilize cloud platforms (AWS) for scalable data processing.
+
+Requirements:
+- Master's degree in Data Science, Computer Science, or Statistics.
+- Strong proficiency in Python, SQL, and Machine Learning techniques.
+- Experience with software engineering best practices (Git, CI/CD).
+- Analytical mindset with strong mathematical foundations."
+"Machine Learning Engineer","We are hiring a Machine Learning Engineer to design and implement scalable ML systems. You will bridge the gap between data science and software engineering.
+
+Key Responsibilities:
+- Design and build machine learning pipelines for training and inference.
+- Optimize ML models for performance and scalability in production.
+- Deploy models to production environments using Docker, Kubernetes, and AWS.
+- Write robust, production-ready Python code and APIs.
+
+Requirements:
+- Bachelor's or Master's degree in Computer Science or related field.
+- Proficiency in Python, SQL, and ML frameworks (Keras, PyTorch).
+- Strong software engineering skills including Git, APIs, and System Design.
+- Experience with MLOps practices and cloud ML services."
+"Nurse Practitioner","We are seeking a Nurse Practitioner to provide high-quality care to our patients. You will manage patient health, prescribe medications, and provide counseling on health maintenance.
+
+Key Responsibilities:
+- Diagnose and treat acute and chronic conditions.
+- Prescribe and manage medication therapies, ensuring patient safety.
+- Counsel patients on drug interactions, side effects, and health maintenance.
+- Maintain accurate electronic health records (EHR).
+
+Requirements:
+- Master of Science in Nursing (MSN) and valid NP License.
+- Strong background in pharmacology and patient counseling.
+- Experience with electronic health records systems.
+- Excellent communication skills."
+"Medical Assistant","We are looking for a Medical Assistant to support our clinical team. You will be responsible for patient intake, medication administration, and maintaining medical records.
+
+Key Responsibilities:
+- Record patient history and vital signs.
+- Administer medications as directed by physicians.
+- Maintain inventory of medical supplies and pharmaceuticals.
+- Assist with patient examinations and procedures.
+
+Requirements:
+- Medical Assistant Diploma or Certification.
+- Proficiency in medical terminology and basic pharmacology.
+- Experience with inventory management and EHR.
+- Strong organizational skills and attention to detail."
+"Pharmacist","We are seeking a knowledgeable Pharmacist to dispense medications and provide drug information to patients and healthcare professionals. You will ensure the safe and effective use of medications.
+
+Key Responsibilities:
+- Review prescriptions for accuracy and check for drug interactions.
+- Dispense medications and counsel patients on dosage and side effects.
+- Maintain inventory of pharmaceutical supplies and controlled substances.
+- Collaborate with physicians to optimize medication therapy.
+
+Requirements:
+- Doctor of Pharmacy (Pharm.D.) degree and state licensure.
+- Strong knowledge of pharmacology and therapeutic drug monitoring.
+- Excellent communication and customer service skills.
+- Attention to detail and accuracy."
+"Pharmacy Technician","We are hiring a Pharmacy Technician to assist pharmacists in dispensing medications. You will handle customer inquiries, process prescriptions, and manage inventory.
+
+Key Responsibilities:
+- Receive and process written and electronic prescriptions.
+- Count, pour, mix, and weigh medications under pharmacist supervision.
+- Manage pharmacy inventory and order supplies.
+- Handle insurance claims and billing issues.
+
+Requirements:
+- High school diploma and Pharmacy Technician Certification (CPhT).
+- Experience working in a retail or hospital pharmacy.
+- Strong organizational and math skills.
+- Ability to work in a fast-paced environment."
+"Digital Marketing Manager","We are seeking a creative Digital Marketing Manager to drive our online presence and lead generation efforts. You will be responsible for planning and executing digital marketing campaigns across various channels.
+
+Key Responsibilities:
+- Develop and implement comprehensive digital marketing strategies (SEO, SEM, Social Media).
+- Manage and optimize paid advertising campaigns on Google Ads and Facebook Ads.
+- Analyze website traffic and campaign performance using Google Analytics.
+- Create engaging content for social media, email newsletters, and the company blog.
+
+Requirements:
+- Bachelor's degree in Marketing, Communications, or related field.
+- 4+ years of experience in digital marketing.
+- Strong knowledge of SEO/SEM best practices and 
+analytics tools.
+- Excellent written and verbal communication skills."
+"SEO Specialist","We are looking for an SEO Specialist to improve our organic search rankings and drive traffic to our website. You will conduct keyword research, optimize on-page content, and build high-quality backlinks.
+
+Key Responsibilities:
+- Perform technical SEO audits and recommend fixes for website performance issues.
+- Conduct keyword research to identify new content opportunities.
+- Optimize website content, meta tags, and headers for search engines.
+- Monitor and report on search rankings and organic traffic growth.
+
+Requirements:
+- 2+ years of experience in SEO or digital marketing.
+- Proficiency with SEO tools like Ahrefs, SEMrush, and Google Search Console.
+- 
+Basic knowledge of HTML/CSS and website CMS (WordPress).
+- Strong analytical skills and data-driven mindset."
+"Public Relations Manager","We are looking for a Public Relations Manager to nurture a strong industry network, increase awareness and develop an enviable corporate image. You will develop and execute effective communication and media relations programs.
+
+Key Responsibilities:
+- Develop a marketing communications plan including strategy, goals, budget and tactics.
+- Coordinate all public relations activities.
+- Leverage existing media relationships and cultivate new contacts within business and industry media.
+- Manage media inquiries and interview requests.
+
+Requirements:
+- Proven working experience in public relations required.
+- Proven track record designing and executing successful public relations campaigns at both a local and national level.
+- Strong relationships with both local 
+and national business and industry media outlets.
+- Exceptional writing and editing skills."
+"Content Strategist","We are seeking a Content Strategist to develop and oversee our content strategy. You will ensure that our content aligns with our business goals and resonates with our target audience.
+
+Key Responsibilities:
+- Develop clear and engaging content that is consistent with the company's brand image and addresses business goals.
+- Analyze content marketing data to identify trends and anticipate consumer needs.
+- Perform content audits to assess how well existing content is performing.
+- Delegate tasks to writers and editors and provide feedback.
+
+Requirements:
+- Bachelor's degree in Marketing, Communications, Journalism, or related field.
+- Proven work experience as a Content Strategist or similar role.
+- A 
+portfolio of published articles.
+- Excellent writing and editing skills."
+"Corporate Attorney","We are hiring an experienced Corporate Attorney to provide legal counsel on business transactions and corporate governance. You will draft contracts, advise on mergers and acquisitions, and ensure regulatory compliance.
+
+Key Responsibilities:
+- Draft, review, and negotiate complex commercial contracts and agreements.
+- Advise management on legal risks and business strategies.
+- Manage corporate governance matters and maintain company records.
+- Oversee outside counsel on litigation and specialized legal matters.
+
+Requirements:
+- Juris Doctor (J.D.) degree and admission to the State Bar.
+- 5+ years of experience in corporate law or a related field.
+- Strong negotiation and contract 
+drafting skills.
+- Excellent judgment and ability to analyze complex legal issues."
+"Legal Paralegal","We are seeking a highly organized Paralegal to support our legal team. You will assist attorneys with legal research, document preparation, and case management.
+
+Key Responsibilities:
+- Conduct legal research and gather relevant case law and statutes.
+- Draft legal documents, including pleadings, motions, and contracts.
+- Organize and maintain case files and legal documents.
+- Communicate with clients, witnesses, and court personnel.
+
+Requirements:
+- Associate degree in Paralegal Studies or Paralegal Certificate.
+- 2+ years of experience working in a law firm or corporate legal department.
+- Proficiency in legal research tools (Westlaw, LexisNexis).
+- Strong organizational and time-management skills."
+"Compliance Officer","We are looking for a Compliance Officer to ensure our company adheres to legal standards and in-house policies. You will be responsible for enforcing regulations in all aspects and levels of business as well as provide guidance on compliance matters.
+
+Key Responsibilities:
+- Develop and implement an effective legal compliance program.
+- Create sound internal controls and monitor adherence to them.
+- Draft and revise company policies.
+- Proactively audit processes, practices and documents to identify weaknesses.
+
+Requirements:
+- Proven experience as a Compliance Officer or Compliance Manager.
+- Experience in risk management.
+- Knowledge of legal requirements and controls (e.g. Anti-Money Laundering, or AML).
+- Familiarity with industry 
+practices and professional standards."
+"Risk Manager","We are seeking a Risk Manager to advise us on various types of risks (business, financial, legal and security). You will identify potential threats and create plans to prevent and mitigate problems.
+
+Key Responsibilities:
+- Conduct assessments to define and analyze possible risks.
+- Evaluate the gravity of each risk by considering its consequences.
+- Audit processes and procedures.
+- Develop control systems and risk management policies.
+
+Requirements:
+- Proven experience as a Risk Manager.
+- Knowledge of risk assessment and control.
+- Experience with auditing and reporting procedures.
+- Familiarity with industry compliance standards and regulations."
+"Investment Banker","We are looking for a driven Investment Banker to join our financial advisory team. You will analyze financial data, value companies, and assist clients with mergers, acquisitions, and capital raising.
+
+Key Responsibilities:
+- Build complex financial models to value companies and investment opportunities.
+- Prepare pitch decks and presentation materials for client meetings.
+- Conduct due diligence on potential transactions.
+- Monitor market trends and identify new business opportunities.
+
+Requirements:
+- Bachelor's or Master's degree in Finance, Economics, or related field.
+- 3+ years of experience in investment banking or corporate finance.
+- Advanced proficiency in financial modeling and Excel.
+- Strong understanding of capital markets and valuation techniques."
+"Financial Analyst","We are seeking a detail-oriented Financial Analyst to support our finance department. You will be responsible for financial planning, analysis, and reporting to support decision-making.
+
+Key Responsibilities:
+- Analyze financial data and prepare monthly, quarterly, and annual reports.
+- Assist in the budgeting and forecasting process.
+- Identify trends and variances in financial performance.
+- Develop financial models to support strategic initiatives.
+
+Requirements:
+- Bachelor's degree in Finance, Accounting, or Economics.
+- 2+ years of experience in financial analysis.
+- Strong proficiency in Excel and financial software (e.g., SAP, Oracle).
+- Excellent analytical and problem-solving skills."
+"Senior Accountant","We are hiring a Senior Accountant to manage our accounting operations. You will be responsible for reconciling account balances and bank statements, maintaining general ledger and preparing month-end close procedures.
+
+Key Responsibilities:
+- Verify, allocate, post and reconcile accounts payable and receivable.
+- Produce error-free accounting reports and present their results.
+- Analyze financial information and summarize financial status.
+- Spot errors and suggest ways to improve efficiency and spending.
+
+Requirements:
+- Proven experience as a Financial Controller, Chief or Senior Accountant.
+- Thorough knowledge of basic accounting procedures.
+- In-depth understanding of Generally Accepted Accounting Principles (GAAP).
+- Experience with general ledger functions and the month-end/year-end close process."
+"Tax Consultant","We are seeking a Tax Consultant to prepare tax returns and provide tax advice to clients. You will ensure compliance with tax laws and minimize tax liabilities.
+
+Key Responsibilities:
+- Prepare and file federal, state, and local tax returns.
+- Research tax laws and regulations to provide accurate advice.
+- Assist clients with tax planning and strategy.
+- Represent clients in tax audits and disputes.
+
+Requirements:
+- CPA or Enrolled Agent certification.
+- Proven experience as a Tax Consultant or Tax Accountant.
+- Strong knowledge of tax laws and regulations.
+- Excellent attention to detail and analytical skills."

@@ -7,11 +7,11 @@ class MatchingService:
     def __init__(self):
         try:
             print("Loading spaCy model...")
-            # Ensure you have run: python -m spacy download en_core_web_md
+            # Ensure you have run: python -m spacy download en_core_web_sm
             self.nlp = spacy.load("en_core_web_sm")
             print("spaCy model loaded successfully.")
         except OSError:
-            print("WARNING: 'en_core_web_md' model not found. Using blank model.")
+            print("WARNING: 'en_core_web_sm' model not found. Using blank model.")
             self.nlp = spacy.blank("en")
 
     def _clean_text(self, text):

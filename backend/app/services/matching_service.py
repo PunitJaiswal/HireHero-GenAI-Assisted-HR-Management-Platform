@@ -8,7 +8,7 @@ class MatchingService:
         try:
             print("Loading spaCy model...")
             # Ensure you have run: python -m spacy download en_core_web_md
-            self.nlp = spacy.load("en_core_web_md")
+            self.nlp = spacy.load("en_core_web_sm")
             print("spaCy model loaded successfully.")
         except OSError:
             print("WARNING: 'en_core_web_md' model not found. Using blank model.")

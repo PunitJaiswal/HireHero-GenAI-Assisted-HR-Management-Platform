@@ -15,9 +15,18 @@ def get_system_status():
         'instance_id': current_app.config.get('SERVER_INSTANCE_ID')
     })
 
+def get_upload_folder():
+    """Returns the upload folder path. Uses /tmp on serverless (Vercel), local uploads/ otherwise."""
+    if os.environ.get('VERCEL') or not os.access(os.path.join(current_app.root_path, 'uploads'), os.W_OK):
+        folder = '/tmp/hirehero_uploads'
+    else:
+        folder = os.path.join(current_app.root_path, 'uploads')
+    os.makedirs(folder, exist_ok=True)
+    return folder
+
 @utility_bp.route('/uploads/<path:filename>', methods=['GET'])
 def get_uploaded_file(filename):
-    upload_folder = os.path.join(current_app.root_path, 'uploads')
+    upload_folder = get_upload_folder()
     return send_from_directory(upload_folder, filename)
 
 @utility_bp.route('/departments', methods=['GET'])

@@ -6,6 +6,16 @@ from ..utils import get_current_user
 
 employee_bp = Blueprint('employee_bp', __name__)
 
+
+def get_upload_folder():
+    """Returns writable upload folder. Uses /tmp on Vercel serverless."""
+    if os.environ.get('VERCEL'):
+        folder = '/tmp/hirehero_uploads'
+    else:
+        folder = os.path.join(current_app.root_path, 'uploads')
+    os.makedirs(folder, exist_ok=True)
+    return folder
+
 # --- HR - Employee Endpoints ---
 
 @employee_bp.route('/hr/employees', methods=['GET'])
@@ -181,8 +191,7 @@ def upload_employee_photo():
         return jsonify({'error': 'No selected file'}), 400
 
     filename = file.filename
-    upload_folder = os.path.join(current_app.root_path, 'uploads')
-    os.makedirs(upload_folder, exist_ok=True)
+    upload_folder = get_upload_folder()
     file_path = os.path.join(upload_folder, filename)
     file.save(file_path)
     photo_url = f"/uploads/{filename}"

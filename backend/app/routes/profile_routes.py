@@ -6,6 +6,16 @@ from ..utils import get_current_user
 
 profile_bp = Blueprint('profile_bp', __name__)
 
+
+def get_upload_folder():
+    """Returns writable upload folder. Uses /tmp on Vercel serverless."""
+    if os.environ.get('VERCEL'):
+        folder = '/tmp/hirehero_uploads'
+    else:
+        folder = os.path.join(current_app.root_path, 'uploads')
+    os.makedirs(folder, exist_ok=True)
+    return folder
+
 # --- Job Seeker - Profile Endpoints ---
 
 # GET /profiles/me
@@ -102,8 +112,7 @@ def upload_resume():
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
     filename = f"resume_{user.id}_{file.filename}"
-    upload_folder = os.path.join(current_app.root_path, 'uploads')
-    os.makedirs(upload_folder, exist_ok=True)
+    upload_folder = get_upload_folder()
     file_path = os.path.join(upload_folder, filename)
     file.save(file_path)
     profile.resume = f"/uploads/{filename}"
@@ -127,8 +136,7 @@ def upload_avatar():
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
     filename = f"profilepic_{user.id}_{file.filename}"
-    upload_folder = os.path.join(current_app.root_path, 'uploads')
-    os.makedirs(upload_folder, exist_ok=True)
+    upload_folder = get_upload_folder()
     file_path = os.path.join(upload_folder, filename)
     file.save(file_path)
     profile.profile_pic = f"/uploads/{filename}"

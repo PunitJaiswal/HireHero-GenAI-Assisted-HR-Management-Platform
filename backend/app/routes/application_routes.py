@@ -9,6 +9,13 @@ from pypdf import PdfReader
 
 application_bp = Blueprint('application_bp', __name__)
 
+
+def get_upload_folder():
+    """Returns writable upload folder. Uses /tmp on Vercel serverless."""
+    if os.environ.get('VERCEL'):
+        return '/tmp/hirehero_uploads'
+    return os.path.join(current_app.root_path, 'uploads')
+
 # --- Job Seeker - Applications ---
 
 @application_bp.route('/applications/my/<int:app_id>/accept', methods=['PUT'])
@@ -59,7 +66,7 @@ def create_application():
             # We need the physical path: current_app.root_path + /uploads/filename
             # Strip leading slash to join correctly
             filename = os.path.basename(user.profile.resume)
-            file_path = os.path.join(current_app.root_path, 'uploads', filename)
+            file_path = os.path.join(get_upload_folder(), filename)
             
             if os.path.exists(file_path):
                 # Extract Text from File

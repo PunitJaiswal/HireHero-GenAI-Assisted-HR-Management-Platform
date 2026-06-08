@@ -1,51 +1,106 @@
-import spacy
-import json
 import re
+import json
+import math
+from collections import Counter
 from .llm_service import llm_service
+
+# Common English stop words for professional text
+STOP_WORDS = {
+    'a', 'an', 'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
+    'of', 'with', 'by', 'from', 'is', 'are', 'was', 'were', 'be', 'been',
+    'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would',
+    'could', 'should', 'may', 'might', 'shall', 'can', 'i', 'you', 'he',
+    'she', 'it', 'we', 'they', 'this', 'that', 'these', 'those', 'my',
+    'your', 'his', 'her', 'its', 'our', 'their', 'as', 'not', 'no', 'nor',
+    'so', 'yet', 'both', 'either', 'each', 'more', 'most', 'other', 'some',
+    'such', 'than', 'too', 'very', 'just', 'about', 'above', 'after',
+    'before', 'during', 'through', 'up', 'down', 'out', 'off', 'over',
+    'under', 'again', 'then', 'once', 'here', 'there', 'when', 'where',
+    'how', 'all', 'any', 'much', 'own', 'same', 'few', 'into', 'also',
+    'what', 'which', 'who', 'whom', 'if', 'while', 'although', 'because',
+    'since', 'unless', 'until', 'though', 'like', 'including', 'across',
+    'among', 'between', 'per', 'vs', 'etc', 'ie', 'eg', 'am', 'us'
+}
+
+# Common suffixes for lightweight stemming
+SUFFIXES = [
+    'ations', 'ation', 'ating', 'ments', 'ment', 'nesses', 'ness',
+    'ities', 'ity', 'ings', 'ing', 'tions', 'tion', 'ions', 'ion',
+    'ers', 'er', 'ous', 'ive', 'ful', 'able', 'ible', 'less',
+    'ally', 'ely', 'ly', 'al', 'ed', 'es', 'en'
+]
+
+
+def _simple_stem(word):
+    """Strip common suffixes to get a root form."""
+    if len(word) <= 4:
+        return word
+    for suffix in SUFFIXES:
+        if word.endswith(suffix) and len(word) - len(suffix) >= 3:
+            return word[:-len(suffix)]
+    return word
+
+
+def _tokenize_and_stem(text):
+    """Tokenize, remove stop words, and stem."""
+    text = re.sub(r'[^a-zA-Z0-9\s\+\#\.\-]', ' ', text.lower())
+    tokens = text.split()
+    return set([
+        _simple_stem(token)
+        for token in tokens
+        if token not in STOP_WORDS and len(token) > 2 and not token.isdigit()
+    ])
+
+
+def _cosine_similarity(text1, text2):
+    """Compute TF-based cosine similarity between two texts."""
+    tokens1 = re.sub(r'[^a-zA-Z0-9\s]', ' ', text1.lower()).split()
+    tokens2 = re.sub(r'[^a-zA-Z0-9\s]', ' ', text2.lower()).split()
+
+    freq1 = Counter(
+        _simple_stem(t) for t in tokens1
+        if t not in STOP_WORDS and len(t) > 2 and not t.isdigit()
+    )
+    freq2 = Counter(
+        _simple_stem(t) for t in tokens2
+        if t not in STOP_WORDS and len(t) > 2 and not t.isdigit()
+    )
+
+    if not freq1 or not freq2:
+        return 0.0
+
+    all_words = set(freq1.keys()) | set(freq2.keys())
+    dot_product = sum(freq1.get(w, 0) * freq2.get(w, 0) for w in all_words)
+    mag1 = math.sqrt(sum(v * v for v in freq1.values()))
+    mag2 = math.sqrt(sum(v * v for v in freq2.values()))
+
+    if mag1 == 0 or mag2 == 0:
+        return 0.0
+
+    return dot_product / (mag1 * mag2)
+
 
 class MatchingService:
     def __init__(self):
-        try:
-            print("Loading spaCy model...")
-            # Ensure you have run: python -m spacy download en_core_web_sm
-            self.nlp = spacy.load("en_core_web_sm")
-            print("spaCy model loaded successfully.")
-        except OSError:
-            print("WARNING: 'en_core_web_sm' model not found. Using blank model.")
-            self.nlp = spacy.blank("en")
+        print("MatchingService initialized (pure-Python NLP, no spaCy required).")
 
     def _clean_text(self, text):
         if not text:
             return ""
-        # Keep essential chars for tech roles
         text = re.sub(r'[^a-zA-Z0-9\s\+\#\.\-]', ' ', text)
         return text.lower().strip()
 
-    def _get_lemmas(self, text):
-        """
-        Extracts base forms of words (lemmas) to match 'Analyzing' with 'Analysis'.
-        """
-        doc = self.nlp(self._clean_text(text))
-        # Filter out stop words, punctuation, and short junk
-        return set([token.lemma_ for token in doc if not token.is_stop and not token.is_punct and len(token.text) > 2])
+    def _get_stems(self, text):
+        """Extract stemmed, filtered tokens from text."""
+        return _tokenize_and_stem(text)
 
     def _construct_profile_text(self, profile):
-        """
-        Constructs a text representation of the candidate profile.
-        Handles BOTH:
-        1. A Database Model Object (Profile)
-        2. A Dictionary (Parsed Resume Data)
-        """
+        """Build a text blob from a Profile DB object or a parsed resume dict."""
         text_parts = []
 
-        # --- From Parsed Resume Dictionary ---
         if isinstance(profile, dict):
-            # Skills
             if 'skills' in profile and isinstance(profile['skills'], list):
-                skills_str = ", ".join(profile['skills'])
-                text_parts.append(skills_str)
-
-            # Experience
+                text_parts.append(", ".join(profile['skills']))
             if 'experience' in profile and isinstance(profile['experience'], list):
                 for exp in profile['experience']:
                     title = exp.get('title', '')
@@ -54,131 +109,85 @@ class MatchingService:
                     text_parts.append(f"{title} at {company}")
                     if desc:
                         text_parts.append(desc)
-
-            # Education
             if 'education' in profile and isinstance(profile['education'], list):
                 for edu in profile['education']:
-                    degree = edu.get('degree', '')
-                    inst = edu.get('institution', '')
-                    text_parts.append(f"{degree} from {inst}")
-
-            # Summary
+                    text_parts.append(f"{edu.get('degree', '')} from {edu.get('institution', '')}")
             if 'summary' in profile and isinstance(profile['summary'], str):
                 text_parts.append(profile['summary'])
 
-        # --- From Profile Database Object ---
         elif profile:
             if hasattr(profile, 'skills') and profile.skills:
-                skills_str = ", ".join(profile.skills)
-                text_parts.append(skills_str)
-
+                text_parts.append(", ".join(profile.skills))
             if hasattr(profile, 'experiences'):
                 for exp in profile.experiences:
-                    # Handle both dict-access or attribute-access if needed, usually attr for DB models
                     title = getattr(exp, 'title', '')
                     company = getattr(exp, 'company', '')
                     desc = getattr(exp, 'description', '')
                     text_parts.append(f"{title} at {company}")
                     if desc:
                         text_parts.append(desc)
-
             if hasattr(profile, 'educations'):
                 for edu in profile.educations:
-                    degree = getattr(edu, 'degree', '')
-                    inst = getattr(edu, 'institution', '')
-                    text_parts.append(f"{degree} from {inst}")
-
+                    text_parts.append(
+                        f"{getattr(edu, 'degree', '')} from {getattr(edu, 'institution', '')}"
+                    )
             if hasattr(profile, 'summary') and profile.summary:
                 text_parts.append(profile.summary)
 
         return ". ".join(text_parts)
 
     def _construct_job_text_for_vector(self, job):
-        """
-        Constructs job text for Vector embedding (includes description).
-        """
-        text_parts = []
-        text_parts.append(job.title)
-        text_parts.append(job.title)
-
+        """Build job text for similarity comparison (includes description)."""
+        text_parts = [job.title, job.title]
         if job.tags:
             tags_clean = job.tags.replace(',', ', ')
             text_parts.append(tags_clean)
             text_parts.append(tags_clean)
-
         if job.description:
             text_parts.append(job.description)
-
         return ". ".join(text_parts)
 
     def calculate_score(self, profile, job):
         try:
-            if not self.nlp or not self.nlp.vocab:
-                return 0.0
-
-            # --- CORE KEYWORD MATCH (The "Hard" Skills) ---
-            # We derive the "Must Haves" strictly from Job Title and Tags.
-            # We ignore the description body for this part to avoid noise.
-
-            job_core_text = f"{job.title} {job.title}" # Double weight on title
+            # --- KEYWORD MATCH (core hard skills from title + tags) ---
+            job_core_text = f"{job.title} {job.title}"
             if job.tags:
                 job_core_text += f" {job.tags.replace(',', ' ')}"
 
-            job_core_lemmas = self._get_lemmas(job_core_text)
+            job_core_stems = self._get_stems(job_core_text)
+            profile_stems = self._get_stems(self._construct_profile_text(profile))
 
-            # Profile "Searchable" text
-            profile_search_text = self._construct_profile_text(profile)
-            profile_lemmas = self._get_lemmas(profile_search_text)
-
-            # Calculate Overlap
-            if not job_core_lemmas:
+            if not job_core_stems:
                 keyword_score = 0.0
             else:
-                intersection = job_core_lemmas.intersection(profile_lemmas)
-                raw_overlap = len(intersection) / len(job_core_lemmas)
+                overlap = len(job_core_stems.intersection(profile_stems)) / len(job_core_stems)
+                keyword_score = min(overlap * 1.5, 1.0)
 
-                # CURVE THE SCORE:
-                # Matching 60% of tags is usually "Excellent". Matching 100% is rare.
-                # We multiply by 1.5 to boost good candidates (e.g., 0.6 -> 0.9).
-                keyword_score = min(raw_overlap * 1.5, 1.0)
+            # --- SEMANTIC SIMILARITY (cosine similarity of token frequencies) ---
+            profile_text = self._construct_profile_text(profile)
+            job_text = self._construct_job_text_for_vector(job)
 
-            # --- SEMANTIC CONTEXT MATCH (The "Soft" Skills) ---
-            # This uses the vectors to understand context (e.g. "Coding" ~ "Development")
-
-            profile_vec_text = self._construct_profile_text(profile)
-            job_vec_text = self._construct_job_text_for_vector(job) # Includes description
-
-            # Safety check: ensure both texts are non-empty
-            if not profile_vec_text or not job_vec_text:
+            if not profile_text or not job_text:
                 semantic_score = 0.0
                 raw_semantic = 0.0
             else:
-                doc_profile = self.nlp(self._clean_text(profile_vec_text[:100000]))
-                doc_job = self.nlp(self._clean_text(job_vec_text[:100000]))
+                raw_semantic = _cosine_similarity(
+                    self._clean_text(profile_text[:100000]),
+                    self._clean_text(job_text[:100000])
+                )
 
-                raw_semantic = doc_profile.similarity(doc_job)
-
-            # Normalize Vector Score:
-            # Vectors are generous. 0.7 is a baseline for "Professional English".
-            # We map 0.6 -> 0.0 and 0.95 -> 1.0
-            semantic_score = max(0, (raw_semantic - 0.6) * 2.5)
+            # Normalize: cosine ~0.3 -> 0, ~0.8 -> 1.0
+            semantic_score = max(0, (raw_semantic - 0.3) * 2.0)
             semantic_score = min(semantic_score, 1.0)
 
-            # --- 3. FINAL WEIGHTED SCORE ---
-            # If the candidate has the KEYWORDS, we trust them highly (65% weight).
-            # The Vector context helps separate good resumes from keyword stuffing (35% weight).
-
+            # --- WEIGHTED FINAL SCORE ---
             final_score = (keyword_score * 0.65) + (semantic_score * 0.35)
 
-            # --- 4. ADJUSTMENTS ---
-
-            # PENALTY: The "Nurse applying for SEO Specialist" case.
-            # If they miss almost ALL core keywords, the semantic score is likely a hallucination/noise.
+            # Penalty: very low keyword match
             if keyword_score < 0.2:
-                final_score *= 0.4 # Crush the score.
+                final_score *= 0.4
 
-            # BOOST: The "Expert" case.
-            # If they matched > 80% of tags (after curve), they are definitely a strong fit.
+            # Boost: very high keyword match
             if keyword_score > 0.8:
                 final_score = max(final_score, 0.85)
 
@@ -189,9 +198,7 @@ class MatchingService:
             return 0.0
 
     def parse_resume_with_llm(self, text):
-        """
-        Uses LLM to extract structured data while ignoring PII.
-        """
+        """Uses LLM to extract structured data from resume text."""
         system_prompt = """
         You are an expert Resume Parser. Extract the following details from the resume text.
         Strictly exclude any Personal Identifiable Information (PII) like Name, Email, Phone.
@@ -213,7 +220,6 @@ class MatchingService:
             return {}
 
     def generate_explanation(self, profile, job, score):
-        # Using the same construction logic as calculation for consistency
         profile_text = self._construct_profile_text(profile)
         job_text = self._construct_job_text_for_vector(job)
 
@@ -223,8 +229,8 @@ class MatchingService:
         The calculated match score is {score}/100.
 
         Provide a strict JSON response (no markdown) with:
-        - "strengths": List of anywhere between 0 to 4 matching skills or experiences (if score is high, then more points here).
-        - "missing": List of anywhere between 0 to 4 key requirements missing from the profile (if score is low, then more points here).
+        - "strengths": List of anywhere between 0 to 4 matching skills or experiences.
+        - "missing": List of anywhere between 0 to 4 key requirements missing from the profile.
         - "verdict": A 1-sentence summary of why this score was given.
         """
 
@@ -242,5 +248,6 @@ class MatchingService:
                 "missing": ["Analysis failed"],
                 "verdict": "Could not generate explanation."
             })
+
 
 matching_service = MatchingService()
